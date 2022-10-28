@@ -61,9 +61,9 @@ CREATE TABLE IF NOT EXISTS `petshop`.`producto` (
   `categoria_producto_idcategoria_producto` INT NOT NULL,
   `tipo_producto_idtipo_producto` INT NOT NULL,
   PRIMARY KEY (`idproducto`),
-  INDEX `fk_producto_raza_producto_idx` (`raza_producto_idraza_producto` ASC) ,
-  INDEX `fk_producto_categoria_producto1_idx` (`categoria_producto_idcategoria_producto` ASC) ,
-  INDEX `fk_producto_tipo_producto1_idx` (`tipo_producto_idtipo_producto` ASC) ,
+  INDEX `fk_producto_raza_producto_idx` (`raza_producto_idraza_producto` ASC),
+  INDEX `fk_producto_categoria_producto1_idx` (`categoria_producto_idcategoria_producto` ASC),
+  INDEX `fk_producto_tipo_producto1_idx` (`tipo_producto_idtipo_producto` ASC),
   CONSTRAINT `fk_producto_raza_producto`
     FOREIGN KEY (`raza_producto_idraza_producto`)
     REFERENCES `petshop`.`raza_producto` (`idraza_producto`)
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `petshop`.`carrito_compra` (
   `idcarrito_compra` INT NOT NULL,
   `usuario_email` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idcarrito_compra`),
-  INDEX `fk_pedido_usuario1_idx` (`usuario_email` ASC) ,
+  INDEX `fk_pedido_usuario1_idx` (`usuario_email` ASC),
   CONSTRAINT `fk_pedido_usuario1`
     FOREIGN KEY (`usuario_email`)
     REFERENCES `petshop`.`usuario` (`email`)
@@ -137,17 +137,17 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `petshop`.`pedido` (
   `producto_idproducto` INT NOT NULL,
-  `pedido_idpedido` INT NOT NULL,
-  PRIMARY KEY (`producto_idproducto`, `pedido_idpedido`),
-  INDEX `fk_producto_has_pedido_pedido1_idx` (`pedido_idpedido` ASC) ,
-  INDEX `fk_producto_has_pedido_producto1_idx` (`producto_idproducto` ASC) ,
+  `carrito_compra_idcarrito_compra` INT NOT NULL,
+  PRIMARY KEY (`producto_idproducto`, `carrito_compra_idcarrito_compra`),
+  INDEX `fk_producto_has_pedido_producto1_idx` (`producto_idproducto` ASC),
+  INDEX `fk_pedido_carrito_compra1_idx` (`carrito_compra_idcarrito_compra` ASC),
   CONSTRAINT `fk_producto_has_pedido_producto1`
     FOREIGN KEY (`producto_idproducto`)
     REFERENCES `petshop`.`producto` (`idproducto`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_producto_has_pedido_pedido1`
-    FOREIGN KEY (`pedido_idpedido`)
+  CONSTRAINT `fk_pedido_carrito_compra1`
+    FOREIGN KEY (`carrito_compra_idcarrito_compra`)
     REFERENCES `petshop`.`carrito_compra` (`idcarrito_compra`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
